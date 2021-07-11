@@ -7,7 +7,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.get('/', (req, res, next) => {
+app.get('/', (req, res, _next) => {
   res.json({ message: 'from index api' });
 });
 
