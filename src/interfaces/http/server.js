@@ -3,11 +3,13 @@ import bodyParser from 'body-parser';
 
 import helloWorld from './hello_world';
 
-const constructServer = ({ config }) => {
-  const { port } = config;
+const constructServer = ({ config, logger }) => {
+  const { port, nodeEnv } = config;
   const app = express();
 
   app.use(bodyParser.json());
+  app.use(logger.file);
+  if (nodeEnv === 'development') app.use(logger.console);
 
   app.get('/', (req, res, _next) => {
     res.json({ message: 'from index api' });
@@ -15,7 +17,7 @@ const constructServer = ({ config }) => {
 
   const start = () => {
     app.listen(port, () => {
-      console.log(helloWorld(port));
+      console.log(helloWorld(port)); // eslint-disable-line no-console
     });
   };
 
