@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import helmet from 'helmet';
 
 import helloWorld from './hello_world';
 
@@ -7,6 +8,7 @@ const constructServer = ({ config, logger }) => {
   const { port, nodeEnv } = config;
   const app = express();
 
+  app.use(helmet());
   app.use(bodyParser.json());
   app.use(logger.file);
   if (nodeEnv === 'development') app.use(logger.console);
