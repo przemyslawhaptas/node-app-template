@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 
 import helloWorld from './hello_world';
+import constructBrowserRouter from './browser';
 
 const constructServer = ({ config, logger }) => {
   const { port, nodeEnv } = config;
@@ -13,9 +14,8 @@ const constructServer = ({ config, logger }) => {
   app.use(logger.file);
   if (nodeEnv === 'development') app.use(logger.console);
 
-  app.get('/', (req, res, _next) => {
-    res.json({ message: 'from index api' });
-  });
+  const browserRouter = constructBrowserRouter();
+  app.use('/', browserRouter);
 
   const start = () => {
     app.listen(port, () => {
