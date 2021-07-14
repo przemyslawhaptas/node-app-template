@@ -1,6 +1,6 @@
 const constructController = () => {
-  const index = (req, res, _next) => {
-    res.json({ message: 'from someDomain index api' });
+  const index = (req, res) => {
+    res.render('HelloWorld', { name: 'John' });
   };
 
   return {

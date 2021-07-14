@@ -1,4 +1,4 @@
-const routes = (router, controller) => {
+const setRoutes = (router, controller) => {
   const {
     index,
   } = controller;
@@ -6,4 +6,4 @@ const routes = (router, controller) => {
   router.get('/', index);
 };
 
-export default routes;
+export default setRoutes;

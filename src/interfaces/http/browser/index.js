@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import routes from './routes';
+import setRoutes from './routes';
 import constructController from './controller';
 import constructSomeDomainRouter from './some_domain';
 
@@ -9,7 +9,7 @@ const constructBrowserRouter = () => {
   const controller = constructController();
   const someDomainRouter = constructSomeDomainRouter();
 
-  routes(router, controller);
+  setRoutes(router, controller);
   router.use('/some-domain', someDomainRouter);
 
   return router;

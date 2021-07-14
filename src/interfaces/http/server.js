@@ -4,6 +4,7 @@ import helmet from 'helmet';
 
 import helloWorld from './hello_world';
 import constructBrowserRouter from './browser';
+import setBrowserViews from './browser/views';
 
 const constructServer = ({ config, logger }) => {
   const { port, nodeEnv } = config;
@@ -14,6 +15,7 @@ const constructServer = ({ config, logger }) => {
   app.use(logger.file);
   if (nodeEnv === 'development') app.use(logger.console);
 
+  setBrowserViews(app);
   const browserRouter = constructBrowserRouter();
   app.use('/', browserRouter);
 
