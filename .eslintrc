@@ -27,6 +27,6 @@
       { "argsIgnorePattern": "^_", "ignoreRestSiblings": true }
     ],
     "max-len": ["error", { "code": 100 }],
-    "implicit-arrow-linebreak": false
+    "implicit-arrow-linebreak": 0
   }
 }

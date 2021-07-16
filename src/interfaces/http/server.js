@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import helloWorld from './hello_world';
 import constructBrowserRouter from './browser';
 import setBrowserViews from './browser/views';
+import constructApiRouter from './api';
 
 const constructServer = ({ config, logger }) => {
   const { port, nodeEnv } = config;
@@ -18,6 +19,9 @@ const constructServer = ({ config, logger }) => {
   setBrowserViews(app);
   const browserRouter = constructBrowserRouter();
   app.use('/', browserRouter);
+
+  const apiRouter = constructApiRouter();
+  app.use('/api', apiRouter);
 
   const start = () => {
     app.listen(port, () => {
