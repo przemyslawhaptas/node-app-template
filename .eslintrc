@@ -28,5 +28,13 @@
     ],
     "max-len": ["error", { "code": 100 }],
     "implicit-arrow-linebreak": 0
-  }
+  },
+  "overrides": [
+    {
+      "files": ["src/infra/db/mappers/*.js", "src/infra/db/repositories/*.js"],
+      "rules": {
+        "camelcase": "off"
+      }
+    }
+  ],
 }

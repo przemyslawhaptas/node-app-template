@@ -9,6 +9,7 @@
         "root": ["."],
         "alias": {
           "http": "./src/interfaces/http",
+          "db": "./src/infra/db",
         }
       }
     ]
