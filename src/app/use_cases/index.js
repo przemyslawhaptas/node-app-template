@@ -1,5 +1,7 @@
-const constructUseCases = ({ repositories }) => ({ // eslint-disable-line no-unused-vars
+import constructAuthentication from './authentication';
 
+const constructUseCases = ({ repositories, domain }) => ({
+  authentication: constructAuthentication({ repositories, domain }),
 });
 
 export default constructUseCases;

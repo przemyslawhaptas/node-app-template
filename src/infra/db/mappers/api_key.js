@@ -1,3 +1,10 @@
+const fromUnpersistedEntity = (unpersistedApiKey) => (
+  {
+    public_key: unpersistedApiKey.publicKey,
+    private_key: unpersistedApiKey.privateKey,
+  }
+);
+
 const fromEntity = (apiKey) => (
   {
     id: apiKey.id,
@@ -17,6 +24,7 @@ const toEntity = (buildEntity) => (row) => buildEntity(
 );
 
 const apiKeyMapper = (buildEntity) => ({
+  fromUnpersistedEntity,
   fromEntity,
   toEntity: toEntity(buildEntity),
 });

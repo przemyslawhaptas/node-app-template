@@ -7,4 +7,18 @@ const buildApiKey = (params) => (
   }
 );
 
+export const buildUnpersistedApiKey = (publicKey, privateKey) => (
+  {
+    publicKey,
+    privateKey,
+  }
+);
+
+export const buildPlainTextApiKey = (publicKey, plainTextPrivateKey) => (
+  {
+    publicKey,
+    plainTextPrivateKey,
+  }
+);
+
 export default buildApiKey;

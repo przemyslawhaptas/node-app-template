@@ -1,9 +1,15 @@
-import * as authentication from './authentication';
+import constructAuthentication, { entities as authenticationEntities } from './authentication';
 
-export const entities = {
-  authentication: authentication.entities,
+const entities = {
+  authentication: authenticationEntities,
 };
 
-export default {
-  authentication,
-};
+const constructDomain = (dependencies) => (
+  {
+    authentication: constructAuthentication(dependencies),
+  }
+);
+
+export { entities };
+
+export default constructDomain;

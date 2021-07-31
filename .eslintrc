@@ -5,10 +5,12 @@
     "plugin:jsx-a11y/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:security/recommended"
+    "plugin:security/recommended",
+    "plugin:fp/recommended"
   ],
   "plugins": [
-    "security"
+    "security",
+    "fp"
   ],
   "settings": {
     "import/resolver": {
@@ -35,6 +37,14 @@
       "rules": {
         "camelcase": "off"
       }
+    },
+    {
+      "files": ["index.js", "scripts/*.js", "src/app/index.js", "src/interfaces/http/**/*.js"],
+      "rules": {
+        "fp/no-unused-expression": "off",
+        "fp/no-nil": "off"
+      }
     }
   ],
+  "reportUnusedDisableDirectives": true
 }

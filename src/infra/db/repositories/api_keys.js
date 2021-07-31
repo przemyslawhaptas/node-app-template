@@ -1,50 +1,58 @@
-import apiKeyMapper from 'db/mappers/api_key';
+import { Either } from 'monet';
 
-const create = ({ db, entities }) => async (entity) => {
-  const mapper = apiKeyMapper(entities.authentication.apiKey);
-  const { public_key, private_key } = mapper.fromEntity(entity);
+import constructApiKeyMapper from 'db/mappers/api_key';
 
-  const row = await db.schema.raw(
+const create = ({ db, apiKeyMapper }) => async (entity) => {
+  const { fromUnpersistedEntity, toEntity } = apiKeyMapper;
+  const { public_key, private_key } = fromUnpersistedEntity(entity);
+  const result = await Either.fromPromise(db.schema.raw(
     `
-      INSERT INTO api_keys (public_key private_key)
-      VALUES (?, ?);
+      INSERT INTO api_keys (public_key, private_key)
+      VALUES (?, ?)
+      RETURNING *;
     `,
     [public_key, private_key],
-  );
+  ));
 
-  return row.map(mapper.toEntity);
+  return result.map(({ rows }) => toEntity(rows[0]));
 };
 
-const retrieve = ({ db, entities }) => async (id) => {
-  const mapper = apiKeyMapper(entities.authentication.apiKey);
-  const row = await db.schema.raw(
+const retrieve = ({ db, apiKeyMapper }) => async (id) => {
+  const { toEntity } = apiKeyMapper;
+  const result = await Either.fromPromise(db.schema.raw(
     `
       SELECT * FROM api_keys
       WHERE api_keys.id = ?;
     `,
     [id],
-  );
+  ));
 
-  return row.map(mapper.toEntity);
+  return result.map(({ rows }) => toEntity(rows[0]));
 };
 
-const destroy = ({ db, entities }) => async (id) => {
-  const mapper = apiKeyMapper(entities.authentication.apiKey);
-  const row = await db.schema.raw(
+const destroy = ({ db, apiKeyMapper }) => async (id) => {
+  const { toEntity } = apiKeyMapper;
+  const result = await Either.fromPromise(db.schema.raw(
     `
       DELETE FROM api_keys
-      WHERE api_keys.id = ?;
+      WHERE api_keys.id = ?
+      RETURNING *;
     `,
     [id],
-  );
+  ));
 
-  return row.map(mapper.toEntity);
+  return result.map(({ rows }) => toEntity(rows[0]));
 };
 
-const apiKeysRepository = ({ db, entities }) => ({
-  create: create({ db, entities }),
-  retrieve: retrieve({ db, entities }),
-  destroy: destroy({ db, entities }),
-});
+const apiKeysRepository = ({ db, entities }) => {
+  const { buildApiKey } = entities.authentication;
+  const apiKeyMapper = constructApiKeyMapper(buildApiKey);
+
+  return ({
+    create: create({ db, apiKeyMapper }),
+    retrieve: retrieve({ db, apiKeyMapper }),
+    destroy: destroy({ db, apiKeyMapper }),
+  });
+};
 
 export default apiKeysRepository;

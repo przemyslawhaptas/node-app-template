@@ -1,5 +1,7 @@
-import buildApiKey from './api_key';
+import buildApiKey, { buildPlainTextApiKey, buildUnpersistedApiKey } from './api_key';
 
 export {
-  buildApiKey, // eslint-disable-line import/prefer-default-export
+  buildApiKey,
+  buildPlainTextApiKey,
+  buildUnpersistedApiKey,
 };
