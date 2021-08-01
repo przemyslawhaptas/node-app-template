@@ -4,8 +4,8 @@ import { buildPlainTextApiKey } from '../entities';
 
 const constructGenerateApiKey = ({ hashApiKey }) => async () => {
   const publicKey = uuidv4();
-  const privateKey = uuidv4();
-  const plainTextApiKey = buildPlainTextApiKey(publicKey, privateKey);
+  const plainTextPrivateKey = uuidv4();
+  const plainTextApiKey = buildPlainTextApiKey(publicKey, plainTextPrivateKey);
   const result = await hashApiKey(plainTextApiKey);
 
   return result.map((unpersistedApiKey) => (

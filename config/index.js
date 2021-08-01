@@ -5,7 +5,9 @@ const { env } = process;
 const environments = {
   development: {},
   production: {},
-  test: {},
+  test: {
+    port: 3001,
+  },
   staging: {},
 };
 

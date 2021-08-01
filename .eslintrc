@@ -6,7 +6,9 @@
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:security/recommended",
-    "plugin:fp/recommended"
+    "plugin:fp/recommended",
+    "plugin:jest/recommended",
+    "plugin:jest/style"
   ],
   "plugins": [
     "security",
@@ -39,7 +41,13 @@
       }
     },
     {
-      "files": ["index.js", "scripts/*.js", "src/app/index.js", "src/interfaces/http/**/*.js"],
+      "files": [
+        "index.js",
+        "scripts/*.js",
+        "src/app/index.js",
+        "src/interfaces/http/**/*.js",
+        "**/*.test.js"
+      ],
       "rules": {
         "fp/no-unused-expression": "off",
         "fp/no-nil": "off"
