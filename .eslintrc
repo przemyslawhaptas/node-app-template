@@ -46,7 +46,8 @@
         "scripts/*.js",
         "src/app/index.js",
         "src/interfaces/http/**/*.js",
-        "**/*.test.js"
+        "**/*.test.js",
+        "test/helpers/db.js"
       ],
       "rules": {
         "fp/no-unused-expression": "off",

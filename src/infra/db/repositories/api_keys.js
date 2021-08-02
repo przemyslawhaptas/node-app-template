@@ -1,6 +1,7 @@
 import { Either } from 'monet';
 
 import constructApiKeyMapper from 'db/mappers/api_key';
+import { single } from './helpers';
 
 const create = ({ db, apiKeyMapper }) => async (entity) => {
   const { fromUnpersistedEntity, toEntity } = apiKeyMapper;
@@ -14,7 +15,7 @@ const create = ({ db, apiKeyMapper }) => async (entity) => {
     [public_key, private_key],
   ));
 
-  return result.map(({ rows }) => toEntity(rows[0]));
+  return result.bind(single(toEntity));
 };
 
 const retrieve = ({ db, apiKeyMapper }) => async (id) => {
@@ -27,7 +28,7 @@ const retrieve = ({ db, apiKeyMapper }) => async (id) => {
     [id],
   ));
 
-  return result.map(({ rows }) => toEntity(rows[0]));
+  return result.bind(single(toEntity));
 };
 
 const destroy = ({ db, apiKeyMapper }) => async (id) => {
@@ -41,7 +42,7 @@ const destroy = ({ db, apiKeyMapper }) => async (id) => {
     [id],
   ));
 
-  return result.map(({ rows }) => toEntity(rows[0]));
+  return result.bind(single(toEntity));
 };
 
 const apiKeysRepository = ({ db, entities }) => {
