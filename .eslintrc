@@ -47,11 +47,17 @@
         "src/app/index.js",
         "src/interfaces/http/**/*.js",
         "**/*.test.js",
-        "test/helpers/db.js"
+        "test/helpers/*.js"
       ],
       "rules": {
         "fp/no-unused-expression": "off",
         "fp/no-nil": "off"
+      }
+    },
+    {
+      "files": ["src/interfaces/http/**/*.test.js"],
+      "rules": {
+        "jest/expect-expect": "off",
       }
     }
   ],
