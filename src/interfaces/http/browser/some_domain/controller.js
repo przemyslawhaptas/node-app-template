@@ -1,6 +1,6 @@
 const constructController = () => {
   const index = (req, res) => {
-    res.render('HelloWorld', { name: 'John' });
+    res.render('HelloWorld', { name: 'Przemek' });
   };
 
   return {

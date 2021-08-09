@@ -4,14 +4,16 @@ import describeRouter from 'test/helpers/http';
 import constructV1Router from './index';
 
 describeRouter('API v1', (app) => {
-  app.use('/', constructV1Router());
+  app.use('/api/v1/', constructV1Router());
 
   describe('GET /', () => {
-    it('leads to index action', async () =>
-      request(app)
-        .get('/')
+    it('routes to index action', async () => {
+      const response = await request(app)
+        .get('/api/v1/')
         .expect(200)
-        .expect('Content-Type', /json/)
-        .expect({ message: 'from api v1 index' }));
+        .expect('Content-Type', /json/);
+
+      expect(response.body).toStrictEqual({ message: 'from api v1 index' });
+    });
   });
 });

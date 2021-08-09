@@ -14,7 +14,7 @@ const constructServer = ({ config, logger }) => {
   app.use(helmet());
   app.use(bodyParser.json());
   app.use(logger.file);
-  if (nodeEnv === 'development') app.use(logger.console);
+  if (['development', 'test'].includes(nodeEnv)) app.use(logger.console);
 
   setBrowserViews(app);
   const browserRouter = constructBrowserRouter();
@@ -31,6 +31,7 @@ const constructServer = ({ config, logger }) => {
 
   return {
     start,
+    app,
   };
 };
 
