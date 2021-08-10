@@ -1,20 +1,16 @@
 import express from 'express';
-import bodyParser from 'body-parser';
-import helmet from 'helmet';
 
-import helloWorld from './hello_world';
-import constructBrowserRouter from './browser';
+import setMiddlewares from './middlewares';
 import setBrowserViews from './browser/views';
+import constructBrowserRouter from './browser';
 import constructApiRouter from './api';
+import helloWorld from './hello_world';
 
-const constructServer = ({ config, logger }) => {
-  const { port, nodeEnv } = config;
+const constructServer = ({ config }) => {
+  const { port } = config;
+
   const app = express();
-
-  app.use(helmet());
-  app.use(bodyParser.json());
-  app.use(logger.file);
-  if (['development', 'test'].includes(nodeEnv)) app.use(logger.console);
+  setMiddlewares(app, config);
 
   setBrowserViews(app);
   const browserRouter = constructBrowserRouter();
