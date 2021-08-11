@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import { verifyPublicKeyFor } from 'test/helpers/http';
 import constructServer from './server';
 
 describe('server', () => {
@@ -7,11 +8,9 @@ describe('server', () => {
     port: null,
     nodeEnv: 'test',
   };
-  const logger = {
-    console: (_request, _response, next) => { next(); },
-    file: (_request, _response, next) => { next(); },
-  };
-  const { app } = constructServer({ config, logger });
+  const verifyPublicKey = verifyPublicKeyFor('publicKey');
+  const useCases = { authentication: { verifyPublicKey } };
+  const { app } = constructServer({ config, useCases });
 
   describe('/', () => {
     it('mounts browser router', async () =>
@@ -24,6 +23,7 @@ describe('server', () => {
     it('mounts api router', async () =>
       request(app)
         .head('/api/v1/')
+        .set('Authorization', 'Api-Key publicKey')
         .expect(200));
   });
 });

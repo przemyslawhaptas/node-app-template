@@ -1,7 +1,7 @@
 import { Either } from 'monet';
 
 import constructApiKeyMapper from 'db/mappers/api_key';
-import { single } from './helpers';
+import { single, maybeSingle } from './helpers';
 
 const create = ({ db, apiKeyMapper }) => async (entity) => {
   const { fromUnpersistedEntity, toEntity } = apiKeyMapper;
@@ -45,6 +45,19 @@ const destroy = ({ db, apiKeyMapper }) => async (id) => {
   return result.bind(single(toEntity));
 };
 
+const findByPublicKey = ({ db, apiKeyMapper }) => async (publicKey) => {
+  const { toEntity } = apiKeyMapper;
+  const result = await Either.fromPromise(db.schema.raw(
+    `
+      SELECT * from api_keys
+      WHERE api_keys.public_key = ?;
+    `,
+    [publicKey],
+  ));
+
+  return result.bind(maybeSingle(toEntity));
+};
+
 const apiKeysRepository = ({ db, entities }) => {
   const { buildApiKey } = entities.authentication;
   const apiKeyMapper = constructApiKeyMapper(buildApiKey);
@@ -53,6 +66,7 @@ const apiKeysRepository = ({ db, entities }) => {
     create: create({ db, apiKeyMapper }),
     retrieve: retrieve({ db, apiKeyMapper }),
     destroy: destroy({ db, apiKeyMapper }),
+    findByPublicKey: findByPublicKey({ db, apiKeyMapper }),
   });
 };
 

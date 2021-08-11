@@ -4,7 +4,6 @@
     "plugin:import/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
     "plugin:security/recommended",
     "plugin:fp/recommended",
     "plugin:jest/recommended",
@@ -47,7 +46,7 @@
         "src/app/index.js",
         "src/interfaces/http/**/*.js",
         "**/*.test.js",
-        "test/helpers/*.js"
+        "test/**/*.js"
       ],
       "rules": {
         "fp/no-unused-expression": "off",

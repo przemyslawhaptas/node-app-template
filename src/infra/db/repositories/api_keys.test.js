@@ -86,4 +86,23 @@ describeRepository('apiKeysRepository', (db) => {
       });
     });
   });
+
+  describe('findByPublicKey', () => {
+    it('returns Just an existing apiKey entity', async () => {
+      const unpersistedApiKey = buildUnpersistedApiKey('publicKey', 'privateKey');
+      const apiKey = (await apiKeysRepository.create(unpersistedApiKey)).right();
+
+      const result = await apiKeysRepository.findByPublicKey('publicKey');
+
+      expect(result.right().just()).toStrictEqual(apiKey);
+    });
+
+    describe('when an apiKey by the given id does not exist', () => {
+      it('returns None', async () => {
+        const result = await apiKeysRepository.findByPublicKey('nonexistent');
+
+        expect(result.right().isNone()).toEqual(true);
+      });
+    });
+  });
 });
