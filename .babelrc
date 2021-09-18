@@ -1,0 +1,18 @@
+{
+  "presets": [
+    ["@babel/preset-env", { targets: { node: "current" }}],
+    ["@babel/preset-react"]
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["."],
+        "alias": {
+          "http": "./src/interfaces/http",
+          "db": "./src/infra/db",
+        }
+      }
+    ]
+  ]
+}

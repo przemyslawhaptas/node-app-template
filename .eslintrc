@@ -1,0 +1,64 @@
+{
+  "extends": [
+    "airbnb-base",
+    "plugin:import/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react/recommended",
+    "plugin:security/recommended",
+    "plugin:fp/recommended",
+    "plugin:jest/recommended",
+    "plugin:jest/style"
+  ],
+  "plugins": [
+    "security",
+    "fp"
+  ],
+  "settings": {
+    "import/resolver": {
+      "babel-module": {}
+    },
+    "react": {
+      "version": "detect",
+    },
+  },
+  "env": {
+    "node": true,
+  },
+  "rules": {
+    "no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_", "ignoreRestSiblings": true }
+    ],
+    "max-len": ["error", { "code": 100 }],
+    "implicit-arrow-linebreak": 0
+  },
+  "overrides": [
+    {
+      "files": ["src/infra/db/mappers/*.js", "src/infra/db/repositories/*.js"],
+      "rules": {
+        "camelcase": "off"
+      }
+    },
+    {
+      "files": [
+        "index.js",
+        "scripts/*.js",
+        "src/app/index.js",
+        "src/interfaces/http/**/*.js",
+        "**/*.test.js",
+        "test/**/*.js"
+      ],
+      "rules": {
+        "fp/no-unused-expression": "off",
+        "fp/no-nil": "off"
+      }
+    },
+    {
+      "files": ["src/interfaces/http/**/*.test.js"],
+      "rules": {
+        "jest/expect-expect": "off",
+      }
+    }
+  ],
+  "reportUnusedDisableDirectives": true
+}
