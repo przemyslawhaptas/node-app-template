@@ -25,30 +25,30 @@ I won't dive into much detail in each of them, at least not at this point, so if
   1. `/config` - a single place for configuration based on environment variables
   2. `/scripts` - console entry points utilizing use cases defined in `/src`
   3. `/src` - code divided into four layers, based on some of DDD/Clean architecture ideas:
-    1. `/app`
-      * joins domain and infrastructure layers to build use cases used in interfaces (eg. Express-based HTTP server or console scripts)
-    2. `/domain`
-      * defines business logic domain as bounded contexts
-      * each bounded context may include elements such as:
-          * entities - objects representing various actors in the system, specific to a given domain; often many entities in different domains may correspond to a single DB table
-          * value objects - usually immutable pieces of domain logic
-          * application services - perform business logic, may use repositories to sync entities with data storage
-    3. `/infra`
-      * handles auxiliary services/tech such as data storage
-      * its `/db` directory is further divided into:
-          - `/mappers` responsible for mapping domain elements to and from SQL tables
-          - `/migrations` - simply containing SQL migrations
-          - `/repositories` - the second only place where all the actual SQL queries and commands are defined; it encapsulates most of the DB-specific logic so that its clients only need to depend on domain elements
-    4. `/interfaces`
-      * encapsulates HTTP server-related logic such as Express server, middlewares, routing etc.
-      * uses Express routers to keep different entry points (e.g. browser and JSON APIs) or an entry point's screens/modules separate
-      * directories are usually divided into:
-          - `routes` that route to controller actions
-          - `controller` that defines actions that utilize domain use cases and renders views
-          - `views` that define HTML view templates
-      * it would be possible to define a frontend app inside this directory if one needed to keep it in the same project
+      1. `/app`
+          * joins domain and infrastructure layers to build use cases used in interfaces (eg. Express-based HTTP server or console scripts)
+      2. `/domain`
+          * defines business logic domain as bounded contexts
+          * each bounded context may include elements such as:
+              * entities - objects representing various actors in the system, specific to a given domain; often many entities in different domains may correspond to a single DB table
+              * value objects - usually immutable pieces of domain logic
+              * application services - perform business logic, may use repositories to sync entities with data storage
+      3. `/infra`
+          * handles auxiliary services/tech such as data storage
+          * its `/db` directory is further divided into:
+              - `/mappers` responsible for mapping domain elements to and from SQL tables
+              - `/migrations` - simply containing SQL migrations
+              - `/repositories` - the second only place where all the actual SQL queries and commands are defined; it encapsulates most of the DB-specific logic so that its clients only need to depend on domain elements
+      4. `/interfaces`
+          * encapsulates HTTP server-related logic such as Express server, middlewares, routing etc.
+          * uses Express routers to keep different entry points (e.g. browser and JSON APIs) or an entry point's screens/modules separate
+          * directories are usually divided into:
+              - `routes` that route to controller actions
+              - `controller` that defines actions that utilize domain use cases and renders views
+              - `views` that define HTML view templates
+          * it would be possible to define a frontend app inside this directory if one needed to keep it in the same project
   4. `/test`
-    * defines test config and helpers rather than tests themselves (see _Testing_ below)
+      * defines test config and helpers rather than tests themselves (see _Testing_ below)
 
 ### Testing
   * I decided to try to keep tests as close to the code they cover as possible in order to better encapsulate project layers/domains/bounded contexts
